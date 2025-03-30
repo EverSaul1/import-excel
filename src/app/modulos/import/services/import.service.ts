@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ImportService {
-  url: string = 'https://4975-38-25-45-204.ngrok-free.app/api';
+  url: string = 'http://127.0.0.1:8000/api';
 
   constructor(private http: HttpClient) { }
 
@@ -15,5 +15,8 @@ export class ImportService {
 
   getTem(params: any) {
     return this.http.get<any>(this.url + '/get-temp', {params});
+  }
+  getProcessedTemp(params: any) {
+    return this.http.get('/api/processed-temp', { params });
   }
 }

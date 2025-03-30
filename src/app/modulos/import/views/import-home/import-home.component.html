@@ -1,44 +1,33 @@
 <div class="contend">
   <div class="header">
-    <h2>Modulo de importar</h2>
+    <h2>Módulo de importar</h2>
     <button>Descargar formato</button>
+    <button (click)="procesar()">Procesar</button>
   </div>
+
   <div class="contend-body">
     <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
 
     <table>
       <thead>
-      <tr>
-        <th>ID</th>
-        <th>Data</th>
-        <th>Acciones</th>
-      </tr>
+        <tr>
+          <th>ID</th>
+          <th>Data</th>
+          <th>Acciones</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of data">
-        <td>{{item.id}}</td>
-        <td>
-          <div *ngIf="item.data">
-            <table border="1">
-              <thead>
-              <tr>
-                <th *ngFor="let key of objectKeys(item.data)">
-                  {{ key | titlecase }}
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td *ngFor="let key of objectKeys(item.data)">
-                  {{ item.data[key] }}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </td>
-        <td>{{ item.acciones }}</td>
-      </tr>
+        <tr *ngFor="let item of data" [ngClass]="{ 'procesado': item.is_processed }">
+          <td>{{ item?.id }}</td>
+          <td>
+            <ng-container *ngIf="item.data">
+              <span *ngFor="let key of objectKeys(item.data); let last = last">
+                <strong>{{ key }}</strong>: {{ item.data[key] }}<span *ngIf="!last">, </span>
+              </span>
+            </ng-container>
+          </td>
+          <td>{{ item.acciones }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
