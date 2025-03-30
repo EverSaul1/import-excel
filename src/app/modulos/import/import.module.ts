@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ImportRoutingModule } from './import-routing.module';
 import { ImportComponent } from './import.component';
 import { ImportHomeComponent } from './views/import-home/import-home.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { ImportHomeComponent } from './views/import-home/import-home.component';
   ],
   imports: [
     CommonModule,
-    ImportRoutingModule
+    ImportRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ImportModule { }

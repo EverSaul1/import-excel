@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import {ImportService} from "../../services/import.service";
 import {ResultTem} from "../../models/models";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-import-home',
@@ -11,25 +12,38 @@ import {ResultTem} from "../../models/models";
 export class ImportHomeComponent implements OnInit {
   data: ResultTem[] = [];
   headers: string[] = [];
+  formData: FormData| null = null;
+  filter: { name: string, value: any }[] = [{name: 'Todos', value: 'all'},{name: 'Procesado', value: 1}, {name: 'Sin procesar', value: 2}];
+  formSelectFilter: any = new FormControl(['']);
   constructor(private service: ImportService) { }
 
   ngOnInit(): void {
     this.getTempData();
   }
   onFileChange(event: any): void {
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    formData.append('entidade_id', '1');
-    this.service.postImport(formData).subscribe({
-      next: (res: any) => {
-        this.getTempData();
-      }
-    })
+    this.formData = new FormData();
+    this.formData.append('file', event.target.files[0]);
+    this.formData.append('entidade_id', '1');
+
+  }
+  sendData(): void {
+    if (this.formData) {
+      console.log(this.formData);
+      this.service.postImport(this.formData).subscribe({
+        next: (res: any) => {
+          this.getTempData();
+        },
+        error: (err) => {
+          console.error('Error al subir archivo:', err);
+        }
+      });
+    }
   }
 
   private getTempData() {
     const params = {
       entidade_id: '1',
+      is_processed: this.formSelectFilter.value
     }
     this.service.getTem(params).subscribe({
       next: (res: any) => {
