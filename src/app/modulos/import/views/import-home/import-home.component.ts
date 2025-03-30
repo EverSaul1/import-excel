@@ -40,6 +40,10 @@ export class ImportHomeComponent implements OnInit {
     }
   }
 
+  selectionData(event: any): void {
+    this.getTempData()
+  }
+
   private getTempData() {
     const params = {
       entidade_id: '1',

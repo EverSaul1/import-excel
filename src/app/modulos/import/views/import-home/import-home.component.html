@@ -9,7 +9,7 @@
     <div style="display: flex; gap: 10px">
       <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
       <button (click)="sendData()">Subir data</button>
-      <select [formControl]="formSelectFilter">
+      <select [formControl]="formSelectFilter" (change)="selectionData($event)">
         <option *ngFor="let item of filter" [value]="item.value">{{item.name}}</option>
       </select>
 
