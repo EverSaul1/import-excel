@@ -13,11 +13,12 @@ export class ImportHomeComponent implements OnInit {
   data: ResultTem[] = [];
   headers: string[] = [];
   formData: FormData| null = null;
-  filter: { name: string, value: any }[] = [{name: 'Todos', value: 'all'},{name: 'Procesado', value: 1}, {name: 'Sin procesar', value: 2}];
+  filter: { name: string, value: any }[] = [{name: 'Todos', value: 'all'},{name: 'Procesado', value: 1}, {name: 'Sin procesar', value: 0}];
   formSelectFilter: any = new FormControl(['']);
   constructor(private service: ImportService) { }
 
   ngOnInit(): void {
+    this.formSelectFilter.setValue('all')
     this.getTempData();
   }
   onFileChange(event: any): void {
@@ -39,11 +40,9 @@ export class ImportHomeComponent implements OnInit {
       });
     }
   }
-
   selectionData(event: any): void {
     this.getTempData()
   }
-
   private getTempData() {
     const params = {
       entidade_id: '1',
@@ -75,7 +74,7 @@ export class ImportHomeComponent implements OnInit {
     const sendPair = async (pair: number[]) => {
       const params = {
         entidade_id,
-        ids: pair
+        ids: pair.join(',')
       };
       return this.service.getProcessedTemp(params).toPromise();
     };

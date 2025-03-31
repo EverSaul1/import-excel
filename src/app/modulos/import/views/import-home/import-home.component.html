@@ -32,7 +32,7 @@
               </span>
             </ng-container>
           </td>
-          <td>{{ item.acciones }}</td>
+          <td>{{ item.acciones }} {{item.is_processed? 'ok': 'fail'}}</td>
         </tr>
       </tbody>
     </table>
